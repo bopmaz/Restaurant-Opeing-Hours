@@ -12,13 +12,13 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
 
-class TimeSelectorViewModel @Inject constructor() : ViewModel() {
+class TimeSelectorViewModel @Inject constructor(private val useCases: TimetableUseCases) :
+    ViewModel() {
 
-    @Inject
-    lateinit var useCases: TimetableUseCases
     @Inject
     lateinit var router: MainRouter
 
+    private val apiLink1 = "https://api.jsonbin.io/b/5cb722dff1170d3f9407f565"
     private val disposables = CompositeDisposable()
 
     val plainTextJson = ObservableField<String>("")
@@ -28,7 +28,11 @@ class TimeSelectorViewModel @Inject constructor() : ViewModel() {
 
 
     fun fetchExampleApi(exampleNumber: Int) {
-
+        when (exampleNumber) {
+            1 -> fetchTimeTable(apiLink1)
+            2 -> fetchTimeTable(apiLink1)
+            3 -> fetchTimeTable(apiLink1)
+        }
     }
 
     fun fetchLinkApi() {
@@ -50,7 +54,6 @@ class TimeSelectorViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun onTimeTableFetched(timetableFetchedResult: TimetableUseCases.TimetableFetchResult) {
-        isLoading.set(timetableFetchedResult == TimetableUseCases.TimetableFetchResult.Loading)
 
         when (timetableFetchedResult) {
             is TimetableUseCases.TimetableFetchResult.Success -> {
@@ -59,6 +62,10 @@ class TimeSelectorViewModel @Inject constructor() : ViewModel() {
 
             is TimetableUseCases.TimetableFetchResult.Failure -> {
                 errorObservable.onNext(timetableFetchedResult.error.toString())
+            }
+
+            TimetableUseCases.TimetableFetchResult.Loading -> {
+                isLoading.set(timetableFetchedResult == TimetableUseCases.TimetableFetchResult.Loading)
             }
         }
     }

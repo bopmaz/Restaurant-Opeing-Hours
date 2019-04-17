@@ -1,11 +1,16 @@
 package com.wolt.restauranttime.domain
 
+import android.annotation.SuppressLint
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import com.wolt.restauranttime.data.TimetableRepository
+import com.wolt.restauranttimeparser.OpeningHours
 import com.wolt.restauranttimeparser.Timetable
 import io.reactivex.Observable
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.LinkedHashMap
 
 class TimetableUseCases @Inject constructor() {
 
@@ -42,7 +47,38 @@ class TimetableUseCases @Inject constructor() {
         }
     }
 
-    fun getStoredTimetable(): Timetable {
-        return repository.storedTimetable
+    fun getTimetableMap(): LinkedHashMap<String, String> {
+        val result = LinkedHashMap<String, String>()
+
+        repository.storedTimetable.time.toList().forEach {
+            result[it.first] = getDayHoursString(it.second)
+        }
+
+        return result
+    }
+
+    private fun getDayHoursString(openingList: List<OpeningHours>): String {
+
+        if (openingList.isEmpty()) {
+            return "Closed"
+        }
+
+        val stringBuilder = StringBuilder()
+
+        openingList.forEach {
+            stringBuilder.append(getTimeString(it.open))
+                .append(" - ")
+                .append(getTimeString(it.close))
+        }
+
+        return stringBuilder.toString()
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun getTimeString(time: Int): String {
+        val simpleDateFormat = SimpleDateFormat("hh:mm a")
+        simpleDateFormat.timeZone = TimeZone.getTimeZone("UTC")
+        return simpleDateFormat.format(Date(time * 1000L))
+
     }
 }

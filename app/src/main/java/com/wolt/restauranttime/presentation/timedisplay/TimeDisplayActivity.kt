@@ -5,9 +5,8 @@ import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.wolt.restauranttime.R
+import com.wolt.restauranttime.databinding.TimeDisplayScreenBinding
 import javax.inject.Inject
 
 class TimeDisplayActivity : AppCompatActivity() {
@@ -23,30 +22,12 @@ class TimeDisplayActivity : AppCompatActivity() {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.unbound()
+    companion object {
+        @JvmStatic
+        @BindingAdapter("listAdapter")
+        fun bindList(listView: ListView, viewModel: TimeDisplayViewModel) {
+            val adapter = TimeListAdapter(viewModel.getDisplayOpeningHours())
+            listView.adapter = adapter
+        }
     }
-
-//    companion object {
-//        @JvmStatic
-//        @BindingAdapter("adapter")
-//        fun bindList(listView: ListView, viewModel: TimeDisplayViewModel) {
-//            val adapter = TimeListAdapter(viewModel.displayRepoList)
-//
-//            adapter.onItemClickListener = { repoFullName: String, position: Int ->
-//                viewModel.onRepoClicked(repoFullName, position)
-//            }
-//
-//            val linearLayoutmanager = LinearLayoutManager(recyclerView.context)
-//            recyclerView.layoutManager = linearLayoutmanager
-//            recyclerView.addOnScrollListener(object :
-//                EndlessRecyclerViewScrollListener(linearLayoutmanager) {
-//                override fun onLoadMore(page: Int, totalItemsCount: Int) {
-//                    viewModel.fetchMore(page)
-//                }
-//            })
-//            recyclerView.adapter = adapter
-//        }
-//    }
 }
