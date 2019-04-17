@@ -3,6 +3,8 @@ package com.wolt.restauranttime.di
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.wolt.restauranttime.data.WoltService
+import com.wolt.restauranttimeparser.Timetable
+import com.wolt.restauranttimeparser.TimetableDeserializer
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -22,7 +24,9 @@ class WoltServiceModule {
     @Provides
     @WoltApplicationScope
     fun provideGson(): Gson {
-        return GsonBuilder().create();
+        return GsonBuilder()
+            .registerTypeAdapter(Timetable::class.java, TimetableDeserializer())
+            .create();
     }
 
     @Provides

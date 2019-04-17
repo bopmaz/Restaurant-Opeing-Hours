@@ -18,7 +18,7 @@ class TimeSelectorViewModel @Inject constructor(private val useCases: TimetableU
     @Inject
     lateinit var router: MainRouter
 
-    private val apiLink1 = "https://api.jsonbin.io/b/5cb722dff1170d3f9407f565"
+    private val apiLink1 = "https://api.myjson.com/bins/yn6ig"
     private val disposables = CompositeDisposable()
 
     val plainTextJson = ObservableField<String>("")

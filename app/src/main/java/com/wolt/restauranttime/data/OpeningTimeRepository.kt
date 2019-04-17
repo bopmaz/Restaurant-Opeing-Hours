@@ -1,5 +1,6 @@
 package com.wolt.restauranttime.data
 
+import com.wolt.restauranttime.di.WoltApplicationScope
 import com.wolt.restauranttimeparser.Timetable
 import io.reactivex.Single
 import javax.inject.Inject
@@ -11,6 +12,7 @@ interface TimetableRepositoryInterface {
     fun fetchTimeTable(url: String): Single<Timetable>
 }
 
+@WoltApplicationScope
 class TimetableRepository @Inject constructor() : TimetableRepositoryInterface {
 
     override var storedTimetable: Timetable = Timetable()

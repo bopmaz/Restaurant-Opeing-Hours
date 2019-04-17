@@ -2,28 +2,21 @@ package com.wolt.restauranttime.presentation.timeselector
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.wolt.restauranttime.BaseActivity
 import com.wolt.restauranttime.R
-import com.wolt.restauranttime.RestaurantTimeApplication
 import com.wolt.restauranttime.databinding.TimeSelectorScreenBinding
-import com.wolt.restauranttime.di.ScreenComponent
-import com.wolt.restauranttime.di.ScreenModule
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.time_selector_screen.*
 import javax.inject.Inject
 
-class TimeSelectorActivity : AppCompatActivity() {
+class TimeSelectorActivity : BaseActivity() {
 
     @Inject
     lateinit var viewModel: TimeSelectorViewModel
     private val disposable = CompositeDisposable()
-
-    val screenComponent: ScreenComponent by lazy {
-        (application as RestaurantTimeApplication).component.screenComponent(ScreenModule(this))
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import com.wolt.restauranttime.data.TimetableRepository
+import com.wolt.restauranttime.di.WoltApplicationScope
 import com.wolt.restauranttimeparser.OpeningHours
 import com.wolt.restauranttimeparser.Timetable
 import io.reactivex.Observable
@@ -12,6 +13,7 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.collections.LinkedHashMap
 
+@WoltApplicationScope
 class TimetableUseCases @Inject constructor() {
 
     sealed class TimetableFetchResult {

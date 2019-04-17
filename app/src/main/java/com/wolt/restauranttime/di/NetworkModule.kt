@@ -4,7 +4,6 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import timber.log.Timber
 
 @Module
 class NetworkModule {
@@ -12,10 +11,8 @@ class NetworkModule {
     @Provides
     @WoltApplicationScope
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
-        val interceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
-            Timber.d(it)
-        })
-        interceptor.level = HttpLoggingInterceptor.Level.BASIC
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
         return interceptor
     }
 
