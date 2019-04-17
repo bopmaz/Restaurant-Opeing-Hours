@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <data>
+    <import type="android.view.View"/>
+    <variable
+      name="viewModel"
+      type="com.wolt.restauranttime.presentation.timeselector.TimeSelectorViewModel"/>
+  </data>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:text="Input Api Response"/>
+
+    <EditText
+      android:layout_width="match_parent"
+      android:layout_height="120dp"
+      android:gravity="top"
+      android:hint="Plain Text Response"
+      android:text="@={viewModel.plainTextJson}"/>
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/buttonGetHours"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Get Opening Hours"/>
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:text="Or fetch from server"/>
+
+    <EditText
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="Link to your Json"
+      android:text="@={viewModel.linkText}"/>
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/buttonFetch"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Fetch Api"/>
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:text="Or fetch from hosted example"/>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonExample1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"/>
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonExample2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"/>
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonExample3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"/>
+    </LinearLayout>
+
+    <ProgressBar
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"/>
+  </LinearLayout>
+</layout>

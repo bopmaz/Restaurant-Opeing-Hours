@@ -8,4 +8,7 @@ import dagger.Component
 interface WoltApplicationComponent {
 
     fun woltService(): WoltService
+
+    fun screenComponent(screenModule: ScreenModule): ScreenComponent
+
 }
