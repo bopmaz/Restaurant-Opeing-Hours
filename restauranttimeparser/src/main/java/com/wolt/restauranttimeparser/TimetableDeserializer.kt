@@ -10,11 +10,6 @@ class TimetableDeserializer : JsonDeserializer<Timetable> {
     val gson = GsonBuilder().create()
     val type = object : TypeToken<LinkedHashMap<String, List<RestaurantTime>>>() {}.type
 
-    enum class TimerReader {
-        READTIMETYPE,
-        WRITEPREVIOUS
-    }
-
     @Throws(JsonParseException::class)
     override fun deserialize(
         json: JsonElement,
@@ -23,7 +18,7 @@ class TimetableDeserializer : JsonDeserializer<Timetable> {
     ): Timetable {
         val result = Timetable()
 
-        var previousKey = ""
+        var yesterdayName = ""
         var lastWeekDayCloseTime = -1
 
         val mapInput =
@@ -32,18 +27,18 @@ class TimetableDeserializer : JsonDeserializer<Timetable> {
         mapInput.toList().forEachIndexed() { index, it ->
             val date: String = it.first
 
-            if (index == 0 && getLastWeekDayOpen(it.second) != -1) {
-                lastWeekDayCloseTime = getLastWeekDayOpen(it.second)
+            if (index == 0 && getLastWeekDayClosingTime(it.second) != -1) {
+                lastWeekDayCloseTime = getLastWeekDayClosingTime(it.second)
             }
 
-            val (timeOpenList, lastDayClosingTime, isDayClosed)
+            val (timeOpenList, lastDayClosingTime)
                     = getOpeningHourList(it.second)
 
-            if (!isDayClosed && index != 0) {
-                result.time.getValue(previousKey).last().close = lastDayClosingTime
+            if (lastDayClosingTime != -1 && index != 0) {
+                result.time.getValue(yesterdayName).last().close = lastDayClosingTime
             }
-            previousKey = it.first
 
+            yesterdayName = it.first
             result.time[date] = timeOpenList
 
             if (lastWeekDayCloseTime != -1 && index == mapInput.toList().size - 1) {
@@ -54,7 +49,13 @@ class TimetableDeserializer : JsonDeserializer<Timetable> {
         return result
     }
 
-    private fun getLastWeekDayOpen(timeList: List<RestaurantTime>): Int {
+    /**
+     *
+     * Use for case last day of the week open overnight
+     * @param timeList list of data class for original schema {"type":"open", time:"36000"}
+     * @return Last week day closing time
+     */
+    private fun getLastWeekDayClosingTime(timeList: List<RestaurantTime>): Int {
         if (timeList.isEmpty()) {
             return -1
         }
@@ -66,20 +67,27 @@ class TimetableDeserializer : JsonDeserializer<Timetable> {
         }
     }
 
-
+    /**
+     *
+     *
+     * @param restaurantTimes list of data class for original schema {"type":"open", time: 36000}
+     * @return A triple which include:
+     * - Opening hour list following the schema {"open": 36000, "close": 72000}
+     * - Int Which is used for the case the restaurant open overnight, if not return -1
+     *
+     */
     private fun getOpeningHourList(
         restaurantTimes: List<RestaurantTime>
-    ): Triple<MutableList<OpeningHours>, Int, Boolean> {
+    ): Pair<MutableList<OpeningHours>, Int> {
 
         if (restaurantTimes.isEmpty()) {
-            return Triple(mutableListOf(), -1, true)
+            return Pair(mutableListOf(), -1)
         }
 
         val openingHoursList = mutableListOf<OpeningHours>()
 
         var lastClosingTime = -1
         var currentPosition = 0
-        var isDateClosed = true
 
         restaurantTimes.forEach {
             when (it.type) {
@@ -92,7 +100,6 @@ class TimetableDeserializer : JsonDeserializer<Timetable> {
                 "close" -> {
                     if (openingHoursList.size == 0) {
                         lastClosingTime = it.value
-                        isDateClosed = false
                     } else {
                         openingHoursList[currentPosition].close = it.value
                         currentPosition++
@@ -101,7 +108,7 @@ class TimetableDeserializer : JsonDeserializer<Timetable> {
             }
         }
 
-        return Triple(openingHoursList, lastClosingTime, isDateClosed)
+        return Pair(openingHoursList, lastClosingTime)
     }
 }
 

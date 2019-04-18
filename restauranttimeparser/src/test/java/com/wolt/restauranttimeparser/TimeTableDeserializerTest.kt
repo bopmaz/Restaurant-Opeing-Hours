@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder
 import org.junit.Assert.*
 import org.junit.Test
 
-class RestaurantAdapterTest {
+class TimeTableDeserializerTest {
 
     private val gson: Gson =
         GsonBuilder().registerTypeAdapter(Timetable::class.java, TimetableDeserializer()).create()

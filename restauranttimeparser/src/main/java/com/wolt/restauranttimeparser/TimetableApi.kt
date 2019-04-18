@@ -11,6 +11,9 @@ class TimetableApi {
 
     companion object {
 
+        /**
+         * Print timetable as String given raw string json input
+         */
         fun printResultString(input: String): String {
             val gson: Gson =
                 GsonBuilder().registerTypeAdapter(Timetable::class.java, TimetableDeserializer())
@@ -31,17 +34,29 @@ class TimetableApi {
             return stringBuilder.toString()
         }
 
+        /**
+         * Get timetable as map
+         *
+         * @param timeTable Timetable object, obtain through gson parser with deserializer adapter
+         * @return Return a Kotlin LinkedHashMap with the format <"day of week": "time open">
+         */
         fun getTimetableMap(timeTable: Timetable): LinkedHashMap<String, String> {
             val result = LinkedHashMap<String, String>()
 
             timeTable.time.toList().forEach {
-                result[it.first] = getDayHoursString(it.second)
+                result[it.first] = getOpeningHoursString(it.second)
             }
 
             return result
         }
 
-        private fun getDayHoursString(openingList: List<OpeningHours>): String {
+        /**
+         * Get opening hour of the day
+         *
+         * @param openingList List of OpeningHours object with schema {"open":36000, "close":72000}
+         * @return  Raw string of
+         */
+        private fun getOpeningHoursString(openingList: List<OpeningHours>): String {
 
             if (openingList.isEmpty()) {
                 return "Closed"
@@ -63,6 +78,12 @@ class TimetableApi {
             return stringBuilder.toString()
         }
 
+        /**
+         * Time parser
+         *
+         * @param time Unix time
+         * @return Human-readable time with AM and PM format
+         */
         @SuppressLint("SimpleDateFormat")
         private fun getTimeString(time: Int): String {
             val simpleDateFormat = SimpleDateFormat("hh:mm a")
