@@ -24,9 +24,8 @@ class TimetableApiTest {
     @Test
     fun test_print_time_table_map_to_string_return_correctly() {
         val timeTable = gson.fromJson<Timetable>(TestCaseStrings.normalHours, Timetable::class.java)
-        val timeTableMap = TimetableApi.getTimetableMap(timeTable)
 
-        val timeTableString = TimetableApi.printMapToString(timeTableMap)
+        val timeTableString = TimetableApi.printResultString(TestCaseStrings.normalHours)
         val expectedString = "monday:Closed\n" +
                 "tuesday:10:00 AM - 06:00 PM\n" +
                 "wednesday:Closed\n" +

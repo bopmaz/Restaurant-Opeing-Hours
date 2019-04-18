@@ -1,6 +1,8 @@
 package com.wolt.restauranttimeparser
 
 import android.annotation.SuppressLint
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.LinkedHashMap
@@ -9,7 +11,14 @@ class TimetableApi {
 
     companion object {
 
-        fun printMapToString(timetableResult: LinkedHashMap<String, String>): String {
+        fun printResultString(input: String): String {
+            val gson: Gson =
+                GsonBuilder().registerTypeAdapter(Timetable::class.java, TimetableDeserializer())
+                    .create()
+
+            val timetableResult =
+                getTimetableMap(gson.fromJson<Timetable>(input, Timetable::class.java))
+
             val stringBuilder = StringBuilder()
 
             timetableResult.toList().forEach {
