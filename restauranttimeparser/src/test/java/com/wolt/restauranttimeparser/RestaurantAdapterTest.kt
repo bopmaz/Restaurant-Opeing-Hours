@@ -7,7 +7,7 @@ import org.junit.Test
 
 class RestaurantAdapterTest {
 
-    val gson: Gson =
+    private val gson: Gson =
         GsonBuilder().registerTypeAdapter(Timetable::class.java, TimetableDeserializer()).create()
 
     @Test

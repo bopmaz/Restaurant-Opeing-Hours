@@ -18,13 +18,27 @@
       android:layout_width="0dp"
       android:layout_height="match_parent"
       android:layout_weight="1"
+      android:layout_marginStart="20dp"
+      android:gravity="center"
+      android:text="Sunday"
+      android:textSize="16sp"/>
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:text=":"
       android:textSize="16sp"/>
 
     <TextView
       android:id="@+id/textViewOpeningHours"
       android:layout_width="0dp"
       android:layout_height="match_parent"
-      android:layout_weight="2"
+      android:layout_weight="1.7"
+      android:layout_marginStart="10dp"
+      android:layout_marginEnd="20dp"
+      android:gravity="start|center_vertical"
+      android:text="09:00 - 07:00"
       android:textSize="16sp"/>
 
 

@@ -19,6 +19,8 @@ class TimeSelectorViewModel @Inject constructor(private val useCases: TimetableU
     lateinit var router: MainRouter
 
     private val apiLink1 = "https://api.myjson.com/bins/yn6ig"
+    private val apiLink2 = "https://api.myjson.com/bins/d9iy8"
+    private val apiLink3 = "https://api.myjson.com/bins/y3p4g"
     private val disposables = CompositeDisposable()
 
     val plainTextJson = ObservableField<String>("")
@@ -26,12 +28,11 @@ class TimeSelectorViewModel @Inject constructor(private val useCases: TimetableU
     val isLoading = ObservableBoolean()
     val errorObservable = BehaviorSubject.create<String>()
 
-
     fun fetchExampleApi(exampleNumber: Int) {
         when (exampleNumber) {
             1 -> fetchTimeTable(apiLink1)
-            2 -> fetchTimeTable(apiLink1)
-            3 -> fetchTimeTable(apiLink1)
+            2 -> fetchTimeTable(apiLink2)
+            3 -> fetchTimeTable(apiLink3)
         }
     }
 
@@ -54,6 +55,7 @@ class TimeSelectorViewModel @Inject constructor(private val useCases: TimetableU
     }
 
     private fun onTimeTableFetched(timetableFetchedResult: TimetableUseCases.TimetableFetchResult) {
+        isLoading.set(timetableFetchedResult == TimetableUseCases.TimetableFetchResult.Loading)
 
         when (timetableFetchedResult) {
             is TimetableUseCases.TimetableFetchResult.Success -> {
@@ -65,7 +67,7 @@ class TimeSelectorViewModel @Inject constructor(private val useCases: TimetableU
             }
 
             TimetableUseCases.TimetableFetchResult.Loading -> {
-                isLoading.set(timetableFetchedResult == TimetableUseCases.TimetableFetchResult.Loading)
+                isLoading.set(true)
             }
         }
     }

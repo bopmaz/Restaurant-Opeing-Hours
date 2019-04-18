@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  >
 
   <data>
     <import type="android.view.View"/>
@@ -8,88 +9,135 @@
       type="com.wolt.restauranttime.presentation.timeselector.TimeSelectorViewModel"/>
   </data>
 
-  <LinearLayout
+  <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
-
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center"
-      android:text="Input Api Response"/>
-
-    <EditText
-      android:layout_width="match_parent"
-      android:layout_height="120dp"
-      android:gravity="top"
-      android:hint="Plain Text Response"
-      android:text="@={viewModel.plainTextJson}"/>
-
-    <com.google.android.material.button.MaterialButton
-      android:id="@+id/buttonGetHours"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Get Opening Hours"/>
-
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center"
-      android:text="Or fetch from server"/>
-
-    <EditText
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:hint="Link to your Json"
-      android:text="@={viewModel.linkText}"/>
-
-    <com.google.android.material.button.MaterialButton
-      android:id="@+id/buttonFetch"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Fetch Api"/>
-
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center"
-      android:text="Or fetch from hosted example"/>
-
+    android:layout_height="match_parent">
     <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal">
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:orientation="vertical">
 
-      <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonExample1"
-        android:layout_width="0dp"
+      <TextView
+        android:textStyle="bold"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"/>
+        android:gravity="center"
+        android:text="@string/input_raw_api_response"
+        android:textSize="20sp"/>
 
-      <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonExample2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"/>
+      <EditText
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_margin="20dp"
+        android:padding="10dp"
+        android:background="@drawable/roundedcorner"
+        android:gravity="top"
+        android:hint="@string/plain_text_response"
+        android:text="@={viewModel.plainTextJson}"/>
 
-      <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonExample3"
-        android:layout_width="0dp"
+      <Button
+        android:id="@+id/buttonGetHours"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"/>
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:background="@drawable/woltgradient"
+        android:elevation="2dp"
+        android:text="@string/get_opening_hours"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"/>
+
+      <TextView
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:text="@string/or_fetch_from_server"
+        android:textSize="20sp"/>
+
+      <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:padding="10dp"
+        android:background="@drawable/roundedcorner"
+        android:hint="@string/link_to_your_json"
+        android:inputType=""
+        android:text="@={viewModel.linkText}"
+        android:textSize="16sp"/>
+
+      <Button
+        android:id="@+id/buttonFetch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/woltgradient"
+        android:text="@string/fetch_api"
+        android:textAllCaps="false"
+        android:textColor="@color/white"/>
+
+      <TextView
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:text="@string/or_fetch_from_hosted_example"
+        android:textSize="20sp"/>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+          android:id="@+id/buttonExample1"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:layout_margin="8dp"
+          android:padding="10dp"
+          android:background="@drawable/woltgradient"
+          android:gravity="center"
+          android:text="@string/example_1"
+          android:textAllCaps="false"
+          android:textColor="@color/white"
+          android:textSize="14sp"/>
+
+        <Button
+          android:id="@+id/buttonExample2"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:layout_margin="8dp"
+          android:padding="10dp"
+          android:background="@drawable/woltgradient"
+          android:gravity="center"
+          android:text="@string/example_2"
+          android:textAllCaps="false"
+          android:textColor="@color/white"/>
+
+        <Button
+          android:id="@+id/buttonExample3"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:layout_margin="8dp"
+          android:padding="10dp"
+          android:background="@drawable/woltgradient"
+          android:gravity="center"
+          android:text="@string/example_3"
+          android:textAllCaps="false"
+          android:textColor="@color/white"/>
+      </LinearLayout>
+
+      <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"/>
     </LinearLayout>
-
-    <ProgressBar
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"/>
-  </LinearLayout>
+  </ScrollView>
 </layout>

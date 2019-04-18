@@ -21,15 +21,6 @@ class NetworkModule {
     fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
-            .addInterceptor {
-                val newRequest = it.request().newBuilder()
-                    .addHeader(
-                        "secret-key",
-                        "\$2a\$10\$fyUTtVOJkL4BOhAJEm0tY.AZZO/0WVLs429tgXnaE3SnZ2H/I2Ruq"
-                    )
-                    .build()
-                it.proceed(newRequest)
-            }
             .build()
     }
 }

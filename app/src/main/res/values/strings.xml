@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Restaurant Time</string>
+  <string name="input_raw_api_response">Input Raw Api Response</string>
+  <string name="plain_text_response">Plain Text Response</string>
+  <string name="get_opening_hours">Get Opening Hours</string>
+  <string name="link_to_your_json">Link to your Json</string>
+  <string name="or_fetch_from_server">Or fetch from server</string>
+  <string name="or_fetch_from_hosted_example">Or fetch from hosted example</string>
+  <string name="example_1">Example 1</string>
+  <string name="example_2">Example 2</string>
+  <string name="example_3">Example 3</string>
+  <string name="fetch_api">Fetch Link</string>
 </resources>
